@@ -1,19 +1,22 @@
 import _ from 'lodash';
 import moment from 'moment';
-
 import sideBarController from './modules/sidebar-controller';
 
-function component() {
-    const element = document.createElement('div');
+if(localStorage.getItem('projects')) {
+    populateProjects();
+} 
 
-   // Lodash, currently included via a script, is required for this line to work
-   // Lodash, now imported by this script
-    element.innerHTML = _.join(['Hello', 'webpack', moment().format('MMMM Do YYYY, h:mm:ss a')], ' ');
+function populateProjects() {
+    let projects = JSON.parse(localStorage.getItem('projects'));
 
-    return element;
+    const projectsHolder = document.querySelector('#sidebar ul');
+    
+    projects.forEach(project => {
+        const listItem = document.createElement('li');
+        listItem.textContent = project.name;
+        projectsHolder.appendChild(listItem);
+    });
 }
-
-//document.body.appendChild(component());
 
 
 

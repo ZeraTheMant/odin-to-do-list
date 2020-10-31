@@ -1,4 +1,5 @@
 import tasksController from './tasks-controller';
+import newProjController from './new-proj-controller';
 
 const workingAreaController = (() => {
     const newProjectArea = document.querySelector('#new-project-area');
