@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import moment from 'moment';
 
+import sideBarController from './modules/sidebar-controller';
+
 function component() {
     const element = document.createElement('div');
 
@@ -11,4 +13,8 @@ function component() {
     return element;
 }
 
-document.body.appendChild(component());
+//document.body.appendChild(component());
+
+
+
+

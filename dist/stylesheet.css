@@ -1,0 +1,247 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+input,
+button {
+    display: block;
+}
+
+body {
+    margin: 0;
+    background: lightgrey;
+    height: 100vh;
+    font-family: 'Grandstander', cursive;
+}
+
+main {
+    border-radius: 30px;
+    width: 94%;
+    height: 90%;
+    background: red;
+    margin: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    display: grid;
+    grid-template-columns: 0.6fr 2fr;
+    overflow: hidden;
+}
+
+ul {
+    margin: 0;
+    list-style: none;
+}
+
+#projects-container {
+    height: 100%;
+    background: white;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    box-shadow: 5px 0 5px rgba(0,0,0,.1);
+    z-index: 1;
+    overflow: inherit;
+}
+
+.container-header {
+    border-top-left-radius: 30px;
+    background: tomato;
+    height: 21%;
+    color: white;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+#working-area-header {
+    border-top-left-radius: 0; 
+    padding: 0 30px;    
+}
+
+.hidden {
+    display: none;
+}
+
+#projects-container .container-header{
+    justify-content: center;
+}
+
+#sidebar {
+    padding: 20px;
+    overflow-y: scroll;
+    height: 79%;
+}
+
+#sidebar ul li {
+    cursor: pointer;
+    padding: 12px;
+    margin-top: 15px;
+    font-size: 1.1rem;
+}
+
+#sidebar ul #new-project-view-btn {
+    color: tomato;
+    font-size: 1.3rem; 
+    margin-top: 0;    
+}
+
+#sidebar ul li:hover {
+    background: tomato;
+    color: white;
+    border-radius: 50px;
+}
+
+#sidebar ul #new-project-view-btn:hover {
+    border-radius: 10px;
+    color: white;
+}
+
+#working-area {
+    background: white;
+}
+
+#new-project-area {
+    width: 50%;
+    margin: 50px auto 0 auto;
+}
+
+#new-project-area input,
+#new-project-area button {
+    width: 100%;
+}
+
+input {
+    padding: 15px;
+    font-size: 1.4rem;
+    border: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    border: 0;
+    color: white;
+    background: turquoise;
+    cursor: pointer;
+    font-size: 1.4rem;
+    padding: 8px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+select {
+    padding: 5px;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.default {
+    border-left: 3px solid lightgrey;
+}
+
+.high {
+    border-left: 3px solid red;
+}
+
+.normal {
+    border-left: 3px solid yellow;
+}
+
+.low {
+    border-left: 3px solid green;
+}
+
+.task-info-container {
+    padding-top: 3px;
+}
+
+.tasks-container > *:not(first-child) {
+    margin-top: 10px;
+}
+
+.todo-task-item {
+    display: grid;
+    grid-template-columns: 50px 1fr 1fr;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.edit-container {
+    justify-self: end;
+}
+
+.edit-container span,
+.complete-task {
+    cursor: pointer;
+}
+
+.complete-task {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 30px;
+    width: 30px;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.complete-task::after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f058";
+    font-weight: 900;
+    font-size: 32px;
+    color: green;
+    display: none;
+}
+
+.complete-task:checked::after {
+    display: block;
+}
+
+
+.complete-task:focus{
+    outline: 0;
+}
+
+.edit:hover {
+    font-size: 1.3rem;
+}
+
+.add-todo-container,
+.filter-container,
+.tasks-container {
+    width: 90%;
+    margin: 30px auto 0 auto;  
+}
+
+.add-todo-container {
+    position: relative;     
+}
+
+.add-todo-container input {
+    width: 93%;
+}
+
+.new-to-do-btn {
+    position: absolute;
+    top: -20px;
+    right: 3px;
+    width: 7%;
+    border-radius: 0 5px 5px 0;
+    height: 100%;
+}

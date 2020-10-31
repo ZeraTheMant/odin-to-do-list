@@ -1817,7 +1817,52 @@ eval("/* module decorator */ module = __webpack_require__.nmd(module);\n//! mome
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ \"./node_modules/lodash/lodash.js\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ \"./node_modules/moment/moment.js\");\n/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);\n\r\n\r\n\r\nfunction component() {\r\n    const element = document.createElement('div');\r\n\r\n   // Lodash, currently included via a script, is required for this line to work\r\n   // Lodash, now imported by this script\r\n    element.innerHTML = lodash__WEBPACK_IMPORTED_MODULE_0___default().join(['Hello', 'webpack', moment__WEBPACK_IMPORTED_MODULE_1___default()().format('MMMM Do YYYY, h:mm:ss a')], ' ');\r\n\r\n    return element;\r\n}\r\n\r\ndocument.body.appendChild(component());\n\n//# sourceURL=webpack://odin-to-do-list/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ \"./node_modules/lodash/lodash.js\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ \"./node_modules/moment/moment.js\");\n/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _modules_sidebar_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/sidebar-controller */ \"./src/modules/sidebar-controller.js\");\n\r\n\r\n\r\n\r\n\r\nfunction component() {\r\n    const element = document.createElement('div');\r\n\r\n   // Lodash, currently included via a script, is required for this line to work\r\n   // Lodash, now imported by this script\r\n    element.innerHTML = lodash__WEBPACK_IMPORTED_MODULE_0___default().join(['Hello', 'webpack', moment__WEBPACK_IMPORTED_MODULE_1___default()().format('MMMM Do YYYY, h:mm:ss a')], ' ');\r\n\r\n    return element;\r\n}\r\n\r\n//document.body.appendChild(component());\r\n\r\n\r\n\r\n\r\n\n\n//# sourceURL=webpack://odin-to-do-list/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/modules/sidebar-controller.js":
+/*!*******************************************!*\
+  !*** ./src/modules/sidebar-controller.js ***!
+  \*******************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => __WEBPACK_DEFAULT_EXPORT__\n/* harmony export */ });\n/* harmony import */ var _working_area_controller__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./working-area-controller */ \"./src/modules/working-area-controller.js\");\n\r\n\r\nconst sideBarController = (() => {\r\n    const setClickHandlers = () => {\r\n        const projects = document.querySelectorAll('#sidebar li:not(#new-project-view-btn)');\r\n        projects.forEach((e) => {\r\n            e.addEventListener('click', handleClick);\r\n        });\r\n\r\n        const newProject = document.querySelector('#sidebar li#new-project-view-btn');    \r\n        newProject.addEventListener('click', switchToNewProject);\r\n    }\r\n    \r\n    const switchToNewProject = () => {\r\n        _working_area_controller__WEBPACK_IMPORTED_MODULE_0__.default.hideCreatedProjectArea();\r\n        _working_area_controller__WEBPACK_IMPORTED_MODULE_0__.default.showNewProjectArea();\r\n        _working_area_controller__WEBPACK_IMPORTED_MODULE_0__.default.setHeaderHTML(`\r\n            <h2>Create new Project</h2>\r\n        `);\r\n    };\r\n \r\n    const handleClick = (e) => {\r\n        //document.querySelector\r\n        _working_area_controller__WEBPACK_IMPORTED_MODULE_0__.default.hideNewProjectArea();\r\n        _working_area_controller__WEBPACK_IMPORTED_MODULE_0__.default.setHeaderHTML(`\r\n            <h2>${ e.target.textContent }</h2>\r\n        `);\r\n        _working_area_controller__WEBPACK_IMPORTED_MODULE_0__.default.showCreatedProjectArea();\r\n    };\r\n    \r\n    setClickHandlers();\r\n})();\r\n\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (sideBarController);\n\n//# sourceURL=webpack://odin-to-do-list/./src/modules/sidebar-controller.js?");
+
+/***/ }),
+
+/***/ "./src/modules/tasks-controller.js":
+/*!*****************************************!*\
+  !*** ./src/modules/tasks-controller.js ***!
+  \*****************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => __WEBPACK_DEFAULT_EXPORT__\n/* harmony export */ });\nconst tasksController = (() => {\r\n    const getAllCurrentTasks = () => document.querySelectorAll('.todo-task-item:not(.default)');    \r\n    const setCompleteHandler = () => {\r\n        const tasks = getAllCurrentTasks();\r\n        tasks.forEach(task => {\r\n            const completeBtn = task.firstElementChild.firstElementChild;\r\n            completeBtn.addEventListener('click', completeTask);\r\n        });\r\n    };\r\n    const completeTask = (e) => {\r\n  //      const taskTitle = e.target.parentNode.nextElementSibling.firstElementChild;\r\n    };\r\n    \r\n    setCompleteHandler();\r\n})();\r\n\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (tasksController);\n\n//# sourceURL=webpack://odin-to-do-list/./src/modules/tasks-controller.js?");
+
+/***/ }),
+
+/***/ "./src/modules/working-area-controller.js":
+/*!************************************************!*\
+  !*** ./src/modules/working-area-controller.js ***!
+  \************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => __WEBPACK_DEFAULT_EXPORT__\n/* harmony export */ });\n/* harmony import */ var _tasks_controller__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tasks-controller */ \"./src/modules/tasks-controller.js\");\n\r\n\r\nconst workingAreaController = (() => {\r\n    const newProjectArea = document.querySelector('#new-project-area');\r\n    const workingAreaHeader = document.querySelector('#working-area-header');\r\n    \r\n    const createdProjectArea = document.querySelector('.created-project-area');\r\n    \r\n    const setHeaderHTML = (html) => {\r\n        workingAreaHeader.innerHTML = html;\r\n    };\r\n    const hideNewProjectArea = () => newProjectArea.classList.add('hidden');\r\n    const showNewProjectArea = () => newProjectArea.classList.remove('hidden');\r\n    const hideCreatedProjectArea = () => createdProjectArea.classList.add('hidden');\r\n    const showCreatedProjectArea = () => createdProjectArea.classList.remove('hidden');\r\n    \r\n    return {\r\n        hideNewProjectArea,\r\n        showNewProjectArea,\r\n        hideCreatedProjectArea,\r\n        showCreatedProjectArea,\r\n        setHeaderHTML\r\n    }\r\n})();\r\n\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (workingAreaController);\n\n//# sourceURL=webpack://odin-to-do-list/./src/modules/working-area-controller.js?");
 
 /***/ })
 
