@@ -1,10 +1,14 @@
 import localStorageController from './local-storage-controller';
+import workingAreaController from './working-area-controller';
 import taskFactory from './task-factory';
 
 const tasksController = (() => {
+    const editTaskArea = document.querySelector('#edit-task-area');
     const newTaskBtn = document.querySelector('.new-to-do-btn');
     const newTaskInput = document.querySelector('.to-do-task');
     const tasksContainer = document.querySelector('.tasks-container');
+    
+    const showEditTaskArea = () => editTaskArea.classList.remove('hidden');
     const getAllCurrentTasks = () => document.querySelectorAll('.todo-task-item:not(.completed)');    
     const setCompleteHandler = () => {
         const tasks = getAllCurrentTasks();
@@ -44,6 +48,11 @@ const tasksController = (() => {
         addTask(newTask);
     };
     
+    const loadEditTaskView = (currentProject, currentTask) => {
+        workingAreaController.hideCreatedProjectArea();
+        showEditTaskArea();
+    };
+    
     const populateProjectTasks = (projectName) => {
         const project = localStorageController.getProject(projectName);
         project.todoTasks.forEach(task => {
@@ -55,12 +64,19 @@ const tasksController = (() => {
     const setEditBtnHandlers = () => {
         const editBtns = document.querySelectorAll('.edit');
         for (let i=0; i<editBtns.length; i++) {
-            editBtns[i].addEventListener('click', editTask);
+            editBtns[i].addEventListener('click', editTaskInit);
         }
     };
     
-    const editTask = (e) => {
-        alert(e.target.parentNode.previousElementSibling.firstElementChild.textContent);
+    const editTaskInit = (e) => {
+        const taskName = e.target.parentNode.previousElementSibling.firstElementChild.textContent;
+        const projectName = document.querySelector('#working-area-header h2').textContent;
+        const currentProject = localStorageController.getProject(projectName);
+        const currentTask = localStorageController.getTask(currentProject, taskName);
+        loadEditTaskView(currentProject, currentTask);
+        workingAreaController.setHeaderHTML(`
+            <h2><div id="circle">&#8249;</div> <span>${ taskName }</span></h2>
+        `);
     };
     
     const addTask = (task) => {

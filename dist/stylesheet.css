@@ -11,6 +11,7 @@ html {
 }
 
 input,
+textarea,
 button {
     display: block;
 }
@@ -244,4 +245,46 @@ select {
     width: 7%;
     border-radius: 0 5px 5px 0;
     height: 100%;
+}
+
+#edit-task-area {
+    width: 100%;
+    height: 100%;
+}
+
+#edit-task-area input,
+#edit-task-area textarea {
+    width: 100%;
+    padding: 10px;
+}
+
+#edit-task-area input,
+#edit-task-area textarea {
+    margin-top: 15px;
+}
+
+#edit-task-area > div {
+    width: 90%;
+    margin: auto;
+}
+
+#circle {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#circle:hover {
+    background: rgb(0, 0, 0, 0.5);    
+}
+
+#working-area-header h2{
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
