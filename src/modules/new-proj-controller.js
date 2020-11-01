@@ -1,4 +1,6 @@
 import projectFactory from './project-factory';
+import localStorageController from './local-storage-controller';
+import sideBarController from './sidebar-controller';
 
 const newProjController = (() => {
     const newProjectName = document.querySelector('#proj-name');    
@@ -7,7 +9,12 @@ const newProjController = (() => {
     const confirmValidSubmission = () => {
         const newProjectNameContent = newProjectName.value.trim();
         if (newProjectNameContent != '') {
-            createNewProjectAndClearInput(newProjectNameContent);
+            if (localStorageController.projectNameExists(newProjectName.value.toLowerCase().trim())) {
+                alert("A project with the same name already exists. Please choose a different name.");
+                newProjectName.value = '';
+            } else {
+                createNewProjectAndClearInput(newProjectNameContent);        
+            }
         } else {
             alert("Please enter a valid project name.");
         }
@@ -17,20 +24,11 @@ const newProjController = (() => {
     
     const createNewProjectAndClearInput = (projName) => {
         const newProject = projectFactory(projName);
-        pushToLocalStorage(newProject);
+        alert("New project added successfully.");
         newProjectName.value = '';
-    };
-
-    const getLocalStorageArray = () => {
-        return (!localStorage.getItem('projects')) ? [] : JSON.parse(localStorage.getItem('projects'));
-    };
-
-    const pushToLocalStorage = (newProject) => {
-        let projects = getLocalStorageArray();
-        projects.push(newProject);
-        alert(JSON.stringify(projects))
-        localStorage.setItem('projects', JSON.stringify(projects));
-    };    
+        localStorageController.addProjectToLocalStorage(newProject);
+        sideBarController.addProjectToSideBar(newProject);
+    };   
 })();
 
 export default newProjController;
