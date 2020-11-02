@@ -49,6 +49,7 @@
                 </div>
                 
                 <div class="tasks-container">
+                    <!--
                     <div class="todo-task-item default completed">
                         <div>
                             <input type="checkbox" class="complete-task"/>
@@ -63,29 +64,29 @@
                             <span class="edit">&#9998;</span>
                         </div>
                     </div>
-                    
-                    <div class="todo-task-item default">
-                        <div>
-                            <input type="checkbox" class="complete-task"/>
-                        </div>
-                    
-                        <div class="task-info-container">
-                            <p class="todo-task-item-name">sdfsdfsd</p>
-                            <p class="date hidden"></p>
-                        </div>
-                        
-                        <div class="edit-container">
-                            <span class="edit">&#9998;</span>
-                        </div>
-                    </div>                    
+                    -->                  
                 </div>
             </div>
             
             <div id="edit-task-area" class="hidden">
-                <div>
-                    <input type="text" id="task-name" placeholder="Task name"/>
-                    <textarea id="task-notes" placeholder="Add a description here" rows="6"></textarea>
-                </div>
+                <form id="edit-task-form">
+                    <input type="text" id="task-name" placeholder="Task name" disabled/>
+                    <textarea id="task-notes" placeholder="Add a description here" rows="8" required></textarea>
+                
+                    <div id="date-and-priority-container">
+                        <input type="date" id="task-date" required/>
+                        <select id="task-priority" required>
+                            <option selected>Normal</option>
+                            <option>High</option>
+                            <option>Low</option>
+                        </select>
+                    </div>
+                    
+                    <div id="task-buttons-container">
+                        <button type="submit" id="save-task-edit-btn">Save edits</button>
+                        <button type="button" id="delete-task-btn">Delete task</button>
+                    </div>
+                </form>
             </div>
         </div>
     </main>

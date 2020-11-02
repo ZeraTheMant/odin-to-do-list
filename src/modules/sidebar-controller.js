@@ -16,6 +16,7 @@ const sideBarController = (() => {
     }
     
     const switchToNewProject = () => {
+        tasksController.hideEditTaskArea();
         workingAreaController.hideCreatedProjectArea();
         workingAreaController.showNewProjectArea();
         workingAreaController.setHeaderHTML(`

@@ -12,7 +12,8 @@ html {
 
 input,
 textarea,
-button {
+button,
+select {
     display: block;
 }
 
@@ -230,6 +231,11 @@ select {
     margin: 30px auto 0 auto;  
 }
 
+#workng-area {
+    overflow-y: scroll;
+
+}
+
 .add-todo-container {
     position: relative;     
 }
@@ -258,12 +264,15 @@ select {
     padding: 10px;
 }
 
-#edit-task-area input,
 #edit-task-area textarea {
     margin-top: 15px;
 }
 
-#edit-task-area > div {
+#edit-task-area input {
+    margin-top: 25px;
+}
+
+#edit-task-area > form {
     width: 90%;
     margin: auto;
 }
@@ -283,8 +292,28 @@ select {
     background: rgb(0, 0, 0, 0.5);    
 }
 
-#working-area-header h2{
+#working-area-header h2,
+#task-buttons-container{
     display: flex;
     align-items: center;
     gap: 20px;
+}
+
+#date-and-priority-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+}
+
+#date-and-priority-container  input,
+#date-and-priority-container select {
+    margin-top: 15px;
+}
+
+#delete-task-btn {
+    background: red;
+}
+
+.date {
+    margin-top: 10px;
 }
