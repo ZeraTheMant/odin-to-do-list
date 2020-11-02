@@ -17,7 +17,11 @@ const workingAreaController = (() => {
     const showCreatedProjectArea = () => {
         createdProjectArea.classList.remove('hidden')
         tasksContainer.innerHTML = '';
-    };  
+    };
+    const getHeaderTextContent = () => {
+
+        return document.querySelector('#working-area-header h2').textContent;
+    };
     
     return {
         hideNewProjectArea,
@@ -25,6 +29,7 @@ const workingAreaController = (() => {
         hideCreatedProjectArea,
         showCreatedProjectArea,
         setHeaderHTML,
+        getHeaderTextContent
     }
 })();
 

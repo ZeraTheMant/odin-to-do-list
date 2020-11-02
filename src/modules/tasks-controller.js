@@ -13,6 +13,8 @@ const tasksController = (() => {
     const taskPriorityDOM = document.querySelector('#task-priority');
     const editTaskForm = document.querySelector('#edit-task-form');
     const deleteTaskBtn = document.querySelector('#delete-task-btn');
+    const statusFilter = document.querySelector('.status-filter');
+    const priorityFilter = document.querySelector('.priority-filter');
     
     const editTaskArea = document.querySelector('#edit-task-area');
     const newTaskBtn = document.querySelector('.new-to-do-btn');
@@ -27,16 +29,7 @@ const tasksController = (() => {
     };
     const hideEditTaskArea = () => editTaskArea.classList.add('hidden');
     const getAllCurrentTasks = () => document.querySelectorAll('.todo-task-item:not(.completed)');    
-    const setCompleteHandler = () => {
-        const tasks = getAllCurrentTasks();
-        tasks.forEach(task => {
-            const completeBtn = task.firstElementChild.firstElementChild;
-            completeBtn.addEventListener('click', completeTask);
-        });
-    };
-    const completeTask = (e) => {
-        const task = e.target.parentNode.parentNode;    
-    };
+
     const deleteTask = (e) => {
         const confirmDelete = confirm("Delete this task?");
         if (confirmDelete) {
@@ -96,12 +89,21 @@ const tasksController = (() => {
     };
     
     const populateProjectTasks = (projectName) => {
+        tasksContainer.innerHTML = '';
         const project = localStorageController.getProject(projectName);
+               
         project.todoTasks.forEach(task => {
             populateTask(task);
             setEditBtnHandlers();
         });
     };
+    
+    const filterRepopulateTasks = () => {
+        populateProjectTasks(workingAreaController.getHeaderTextContent());
+    };
+    
+    priorityFilter.addEventListener('change', filterRepopulateTasks);
+    statusFilter.addEventListener('change', filterRepopulateTasks);
     
     const setEditBtnHandlers = () => {
         const editBtns = document.querySelectorAll('.edit');
@@ -135,60 +137,99 @@ const tasksController = (() => {
     const addTask = (task) => {
         populateTask(task);
         setEditBtnHandlers();
-    }
+    };
+    
+    const completeTaskInit = (e) => {
+        const confirmCompletion = confirm("Declare this task as complete?");
+        if (confirmCompletion) {
+            const taskName = e.target.parentNode.nextElementSibling.firstChild.textContent;
+            const projectName = workingAreaController.getHeaderTextContent();
+            completeTask(projectName, taskName)
+        }       
+    };
+    
+    const completeTask = (projectName, taskName) => {
+        const project = localStorageController.getProject(projectName);
+        const task = localStorageController.getTask(project, taskName);
+        task.isComplete = true;
+        localStorageController.editProjectTask(project, task);
+        populateProjectTasks(workingAreaController.getHeaderTextContent());
+    };
+    
+    const taskSatisfiesStatusFilter = (task) => {
+        const statusFilterValue = statusFilter.value;
+
+        const status = (statusFilterValue == 'Current') ? false : true;
+        return status == task.isComplete;
+    };
+    
+    const taskSatisfiesPriorityFilter = (task) => {
+        const priorityFilterValue = priorityFilter.value;
+        
+        if (priorityFilterValue == 'All') return true;
+        return task.priority == priorityFilterValue;
+    };
     
     const populateTask = (task) => {
-        const container = document.createElement('div');
-        container.classList.add('todo-task-item'); 
+        if (taskSatisfiesStatusFilter(task) && taskSatisfiesPriorityFilter(task)) {
+            const container = document.createElement('div');
+            container.classList.add('todo-task-item'); 
 
-        if (!task.priority) {
-            container.classList.add('default');         
-        } else if (task.priority == 'High') {
-            container.classList.add('high'); 
-        } else if (task.priority == 'Normal') {
-            container.classList.add('normal'); 
-        } else {
-            container.classList.add('low'); 
-        }     
+            if (!task.priority) {
+                container.classList.add('default');         
+            } else if (task.priority == 'High') {
+                container.classList.add('high'); 
+            } else if (task.priority == 'Normal') {
+                container.classList.add('normal'); 
+            } else {
+                container.classList.add('low'); 
+            }
 
-        const checkBoxContainer = document.createElement('div');   
-        const checkBox = document.createElement('input');       
-        checkBox.type = 'checkbox';
-        checkBox.classList.add('complete-task');     
-        checkBoxContainer.appendChild(checkBox);
-        
-        const taskInfoContainer = document.createElement('div'); 
-        const taskName = document.createElement('p'); 
-        taskName.textContent = task.name;
-        taskName.classList.add('todo-task-item-name');
-        const date = document.createElement('p'); 
-        date.classList.add('date');
+            const checkBoxContainer = document.createElement('div');   
+            const checkBox = document.createElement('input');       
+            checkBox.type = 'checkbox';
+            checkBox.classList.add('complete-task');     
+            checkBoxContainer.appendChild(checkBox);
+            checkBox.addEventListener('change', completeTaskInit);              
+            
+            const taskInfoContainer = document.createElement('div'); 
+            const taskName = document.createElement('p'); 
+            taskName.textContent = task.name;
+            taskName.classList.add('todo-task-item-name');
+            const date = document.createElement('p'); 
+            date.classList.add('date');
 
-        if (!task.dueDate) {
-            date.classList.add('hidden');       
-        } else {
-            date.innerHTML = `&#128197; ${ moment(task.dueDate).format('MMMM Do YYYY') }`;
-        }
+            if (!task.dueDate) {
+                date.classList.add('hidden');       
+            } else {
+                date.innerHTML = `&#128197; ${ moment(task.dueDate).format('MMMM Do YYYY') }`;
+            }
 
-        taskInfoContainer.appendChild(taskName);
-        taskInfoContainer.appendChild(date);
-        
-        const editContainer = document.createElement('div'); 
-        editContainer.classList.add('edit-container');  
-        const editBtn = document.createElement('span');  
-        editBtn.classList.add('edit');   
-        editBtn.innerHTML = `&#9998;`;
-        editContainer.appendChild(editBtn);
-        
-        container.appendChild(checkBoxContainer);
-        container.appendChild(taskInfoContainer);
-        container.appendChild(editContainer);
-        
-        tasksContainer.appendChild(container);    
+            taskInfoContainer.appendChild(taskName);
+            taskInfoContainer.appendChild(date);
+            
+            const editContainer = document.createElement('div'); 
+            editContainer.classList.add('edit-container');  
+            const editBtn = document.createElement('span');  
+            editBtn.classList.add('edit');   
+            editBtn.innerHTML = `&#9998;`;
+            editContainer.appendChild(editBtn);
+            
+            if (task.isComplete) {
+                editContainer.classList.add('hidden');
+                checkBoxContainer.classList.add('hidden'); 
+                container.classList.add('todo-task-item-completed');               
+            }
+            
+            container.appendChild(checkBoxContainer);     
+            container.appendChild(taskInfoContainer);
+            container.appendChild(editContainer);
+            
+            tasksContainer.appendChild(container);            
+        }    
     };  
     
     newTaskBtn.addEventListener('click', confirmValidSubmission)
-    setCompleteHandler();
     
     return {
         populateProjectTasks,

@@ -3,13 +3,15 @@ const taskFactory = (name) => {
     let dueDate;
     let priority;
     let notes;
+    let isComplete = false;
     
     return { 
         name,
         description, 
         dueDate,
         priority,
-        notes
+        notes,
+        isComplete
     };
 };
 
